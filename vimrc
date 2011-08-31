@@ -14,6 +14,9 @@ set incsearch
 set laststatus=2
 set report=0
 
+" Avoid clear screen at exit
+set t_ti= t_te=
+
 " Explicitly set the default tab to \t, not 8 spaces.
 " Also set auto indent and allow backspace anywhere.
 " For more info check this out:
