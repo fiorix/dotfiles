@@ -1,6 +1,11 @@
 # fiorix's ~/.ssh/config
-# 20110321rc1
 #
 # Connection sharing settings.
 ControlMaster auto
 ControlPath /tmp/ssh_mux_%h_%p_%r
+
+#Host foo
+#HostName 10.0.0.1
+#User root
+#IdentityFile ~/.ssh/bar
+
