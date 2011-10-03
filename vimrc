@@ -1,5 +1,4 @@
 " fiorix's vimrc
-" 20110831rc1
 
 " Use vim defaults.
 set nocompatible
@@ -34,7 +33,7 @@ syntax on
 set hlsearch
 set t_Co=256
 hi Comment term=bold ctermfg=White
-hi Search  term=bold ctermfg=Black ctermbg=DarkYellow
+hi Search term=bold ctermfg=Black ctermbg=DarkYellow
 
 " Highlight cursor line.
 set cursorline
@@ -53,3 +52,9 @@ autocmd FileType c,cpp set cindent
 
 " Python specific settings.
 autocmd FileType python set expandtab tabstop=4 shiftwidth=4 softtabstop=4
+
+" mini, little and normal tabs
+map \m <Esc>:set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+map \t <Esc>:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+map \T <Esc>:set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0<CR>
+
