@@ -40,8 +40,10 @@ set cursorline
 hi CursorLine cterm=NONE ctermbg=DarkBlue ctermfg=White
 
 " Highlight overlength lines.
-set cc=80
-hi ColorColumn ctermbg=DarkGrey
+if exists("+colorcolumn")
+ set colorcolumn=81
+ hi ColorColumn ctermbg=DarkGrey
+endif
 
 " Highlight trailing whitespace.
 highlight WhitespaceEOL ctermbg=DarkRed
