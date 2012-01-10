@@ -24,6 +24,9 @@ set sw=8 noet
 set bs=2
 set ai
 
+" set case-insensitive search instead of always search with \c as /\cfoobar
+set ic
+
 " History and .viminfo
 set history=50
 set viminfo='20,\"50
