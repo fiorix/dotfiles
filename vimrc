@@ -40,7 +40,7 @@ hi Search term=bold ctermfg=Black ctermbg=DarkYellow
 
 " Highlight cursor line.
 set cursorline
-hi CursorLine cterm=NONE ctermbg=DarkBlue ctermfg=White
+hi CursorLine cterm=Underline
 
 " Highlight overlength lines.
 if exists("+colorcolumn")
@@ -63,3 +63,5 @@ map \m <Esc>:set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 map \t <Esc>:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 map \T <Esc>:set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0<CR>
 
+" pathogen
+call pathogen#infect()
