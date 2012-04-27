@@ -40,9 +40,11 @@ hi Search term=bold ctermfg=Black ctermbg=DarkYellow
 
 " Highlight cursor line.
 set cursorline
-hi CursorLine cterm=Underline
+hi CursorLine cterm=NONE ctermbg=DarkBlue
 
 " Highlight overlength lines.
+"au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
+au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 if exists("+colorcolumn")
  set colorcolumn=81
  hi ColorColumn ctermbg=DarkGrey
@@ -64,4 +66,4 @@ map \t <Esc>:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 map \T <Esc>:set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0<CR>
 
 " pathogen
-call pathogen#infect()
+"call pathogen#infect()

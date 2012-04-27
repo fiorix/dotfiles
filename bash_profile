@@ -1,8 +1,7 @@
 # fiorix's .bash_profile
-# 20100722rc1
 
 # Aliases
-alias ls='ls -G'
+alias ls='ls -GF'
 alias rm='rm -vi'
 alias cp='cp -vi'
 alias mv='mv -vi'
