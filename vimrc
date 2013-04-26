@@ -1,5 +1,10 @@
 " fiorix's vimrc
 
+" go
+set rtp+=$GOROOT/misc/vim
+filetype plugin indent on
+autocmd BufWritePre *.go :silent Fmt
+
 " Use vim defaults.
 set nocompatible
 
@@ -43,11 +48,11 @@ set cursorline
 hi CursorLine cterm=NONE ctermbg=DarkBlue
 
 " Highlight overlength lines.
-"au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
-"au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-if exists("+colorcolumn")
- set colorcolumn=81
- hi ColorColumn ctermbg=DarkGrey
+if exists('+colorcolumn')
+  set colorcolumn=80
+  hi ColorColumn ctermbg=DarkGrey
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
 " Highlight trailing whitespace.
@@ -66,4 +71,8 @@ map \t <Esc>:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 map \T <Esc>:set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0<CR>
 
 " pathogen
-"call pathogen#infect()
+call pathogen#infect()
+
+" markdown file type
+" syntax from http://www.vim.org/scripts/script.php?script_id=1242
+au BufRead,BufNewFile *.md,*.mkd,*.markdown,*.mdwn   set filetype=mkd
