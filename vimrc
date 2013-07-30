@@ -7,6 +7,7 @@ autocmd BufWritePre *.go :silent Fmt
 
 " Use vim defaults.
 set nocompatible
+colorscheme desert
 
 " Show some extra information.
 set ruler
@@ -76,3 +77,7 @@ call pathogen#infect()
 " markdown file type
 " syntax from http://www.vim.org/scripts/script.php?script_id=1242
 au BufRead,BufNewFile *.md,*.mkd,*.markdown,*.mdwn   set filetype=mkd
+
+" omni settings
+set wildmode=list:longest
+set completeopt=longest,menuone
