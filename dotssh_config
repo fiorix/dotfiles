@@ -1,6 +1,4 @@
-# fiorix's ~/.ssh/config
-#
-# Connection sharing settings.
+Compression yes
 ControlMaster auto
 ControlPath /tmp/ssh_mux_%h_%p_%r
 
@@ -9,3 +7,7 @@ ControlPath /tmp/ssh_mux_%h_%p_%r
 #User root
 #IdentityFile ~/.ssh/bar
 
+#Host company-bitbucket
+#HostName bitbucket.org
+#User root
+#IdentityFile ~/.ssh/company_id_dsa

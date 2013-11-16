@@ -1,5 +1,3 @@
-" fiorix's vimrc
-
 " go
 set rtp+=$GOROOT/misc/vim
 filetype plugin indent on
@@ -66,10 +64,11 @@ autocmd FileType c,cpp set cindent
 " Python specific settings.
 autocmd FileType python set expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
-" mini, little and normal tabs
-map \m <Esc>:set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
-map \t <Esc>:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
-map \T <Esc>:set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0<CR>
+" Tab options
+map \1 <Esc>:set expandtab tabstop=1 shiftwidth=1 softtabstop=1<CR>
+map \2 <Esc>:set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+map \4 <Esc>:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+map \t <Esc>:set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0<CR>
 
 " pathogen
 call pathogen#infect()

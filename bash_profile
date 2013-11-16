@@ -1,5 +1,3 @@
-# fiorix's .bash_profile
-
 # Aliases
 alias ls='ls -GF'
 alias rm='rm -vi'
@@ -13,7 +11,7 @@ export EDITOR=vim
 export GREP_OPTIONS="--color=auto"
 export HISTSIZE=8000
 export LESS="-i -R"
-export COPYFILE_DISABLE=true # Prevent OSX's tar to create ._ files
+export COPYFILE_DISABLE=true # Prevent OSX's tar from creating ._ files
 
 # Go
 export GOROOT=/opt/go

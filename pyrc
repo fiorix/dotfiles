@@ -1,22 +1,17 @@
-# fiorix's pyrc
-# 20090519rc2
-#
 # Add the following to .bash_profile:
 #  export PYTHONSTARTUP=~/.pyrc
-
 try:
     import readline
 except ImportError:
     pass
 else:
     import rlcompleter, os, atexit
-
     histfile = os.path.join(os.environ['HOME'], '.pyhist')
     try:
         readline.read_history_file(histfile)
     except IOError:
         pass
-
     readline.parse_and_bind('bind ^I rl_complete')
+    #readline.parse_and_bind('tab: complete')
     atexit.register(readline.write_history_file, histfile)
     del os, histfile, readline, atexit, rlcompleter
