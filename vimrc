@@ -1,7 +1,10 @@
-" go
-set rtp+=$GOROOT/misc/vim
+" fiorix's vimrc
+
+" Go plugins.
+filetype off
+filetype plugin indent off
+set runtimepath+=/opt/go/misc/vim
 filetype plugin indent on
-autocmd BufWritePre *.go :silent Fmt
 
 " Use vim defaults.
 set nocompatible
@@ -58,13 +61,17 @@ endif
 highlight WhitespaceEOL ctermbg=DarkRed
 match WhitespaceEOL /\s\+$/
 
-" C and C++ specific settings.
+" Go settings: use goimports and run gofmt on save.
+let g:gofmt_command="goimports"
+autocmd FileType go autocmd BufWritePre <buffer> Fmt
+
+" C and C++ indent.
 autocmd FileType c,cpp set cindent
 
-" Python specific settings.
+" Python indent.
 autocmd FileType python set expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
-" Tab options
+" Optional tab sizes.
 map \1 <Esc>:set expandtab tabstop=1 shiftwidth=1 softtabstop=1<CR>
 map \2 <Esc>:set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 map \4 <Esc>:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
@@ -73,10 +80,9 @@ map \t <Esc>:set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0<CR>
 " pathogen
 call pathogen#infect()
 
-" markdown file type
-" syntax from http://www.vim.org/scripts/script.php?script_id=1242
-au BufRead,BufNewFile *.md,*.mkd,*.markdown,*.mdwn   set filetype=mkd
-
 " omni settings
 set wildmode=list:longest
 set completeopt=longest,menuone
+
+" Syntastic fix: ignore proprietary html errors(e.g. angularjs)
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
