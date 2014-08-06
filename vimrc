@@ -6,9 +6,13 @@ filetype plugin indent off
 set runtimepath+=/opt/go/misc/vim
 filetype plugin indent on
 
-" Use vim defaults.
+" Misc
 set nocompatible
-colorscheme desert
+set splitright
+colorscheme pablo
+
+" Avoid clear screen at exit.
+set t_ti= t_te=
 
 " Show some extra information.
 set ruler
@@ -19,9 +23,6 @@ set showmatch
 set incsearch
 set laststatus=2
 set report=0
-
-" Avoid clear screen at exit
-set t_ti= t_te=
 
 " Explicitly set the default tab to \t, not 8 spaces.
 " Also set auto indent and allow backspace anywhere.
@@ -47,12 +48,12 @@ hi Search term=bold ctermfg=Black ctermbg=DarkYellow
 
 " Highlight cursor line.
 set cursorline
-hi CursorLine cterm=NONE ctermbg=DarkBlue
+hi CursorLine cterm=NONE ctermbg=DarkRed
 
 " Highlight overlength lines.
 if exists('+colorcolumn')
-  set colorcolumn=80
-  hi ColorColumn ctermbg=DarkGrey
+	set colorcolumn=80
+	hi ColorColumn ctermbg=DarkGrey
 else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
@@ -71,6 +72,9 @@ autocmd FileType c,cpp set cindent
 " Python indent.
 autocmd FileType python set expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
+" Markdown.
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
 " Optional tab sizes.
 map \1 <Esc>:set expandtab tabstop=1 shiftwidth=1 softtabstop=1<CR>
 map \2 <Esc>:set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
@@ -84,5 +88,5 @@ call pathogen#infect()
 set wildmode=list:longest
 set completeopt=longest,menuone
 
-" Syntastic fix: ignore proprietary html errors(e.g. angularjs)
+" Syntastic fix: ignore errors about proprietary html for angularjs.
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
