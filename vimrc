@@ -1,15 +1,10 @@
-" fiorix's vimrc
-
-" Go plugins.
-filetype off
-filetype plugin indent off
-set runtimepath+=/opt/go/misc/vim
-filetype plugin indent on
+" my vimrc
 
 " Misc
 set nocompatible
 set splitright
 colorscheme pablo
+filetype plugin indent on
 
 " Avoid clear screen at exit.
 set t_ti= t_te=
@@ -63,8 +58,8 @@ highlight WhitespaceEOL ctermbg=DarkRed
 match WhitespaceEOL /\s\+$/
 
 " Go settings: use goimports and run gofmt on save.
-let g:gofmt_command="goimports"
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
+"let g:gofmt_command="goimports"
+"autocmd FileType go autocmd BufWritePre <buffer> Fmt
 
 " C and C++ indent.
 autocmd FileType c,cpp set cindent
@@ -88,5 +83,8 @@ call pathogen#infect()
 set wildmode=list:longest
 set completeopt=longest,menuone
 
-" Syntastic fix: ignore errors about proprietary html for angularjs.
+" auto open tagbar
+autocmd VimEnter * nested :call tagbar#autoopen(1)
+
+" Ignore Syntastic errors about proprietary html tags of angularjs.
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
