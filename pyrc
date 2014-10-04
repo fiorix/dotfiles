@@ -1,4 +1,4 @@
-# Add the following to .bash_profile:
+# Add to .bash_profile:
 #  export PYTHONSTARTUP=~/.pyrc
 try:
     import readline

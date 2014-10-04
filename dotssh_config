@@ -6,8 +6,3 @@ ControlPath /tmp/ssh_mux_%h_%p_%r
 #HostName 10.0.0.1
 #User root
 #IdentityFile ~/.ssh/bar
-
-#Host company-bitbucket
-#HostName bitbucket.org
-#User root
-#IdentityFile ~/.ssh/company_id_dsa

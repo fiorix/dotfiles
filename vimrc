@@ -1,5 +1,3 @@
-" my vimrc
-
 " Misc
 set nocompatible
 set splitright
