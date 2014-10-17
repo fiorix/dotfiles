@@ -41,7 +41,7 @@ hi Search term=bold ctermfg=Black ctermbg=DarkYellow
 
 " Highlight cursor line.
 set cursorline
-hi CursorLine cterm=NONE ctermbg=DarkRed
+hi CursorLine cterm=NONE ctermbg=DarkBlue
 
 " Highlight overlength lines.
 if exists('+colorcolumn')
@@ -83,6 +83,7 @@ set completeopt=longest,menuone
 
 " auto open tagbar
 autocmd VimEnter * nested :call tagbar#autoopen(1)
+map <F8> :TagbarToggle<CR>
 
 " Ignore Syntastic errors about proprietary html tags of angularjs.
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
