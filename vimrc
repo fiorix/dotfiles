@@ -1,7 +1,7 @@
 " Misc
 set nocompatible
 set splitright
-colorscheme pablo
+colorscheme bvemu
 filetype plugin indent on
 
 " Avoid clear screen at exit.
@@ -41,23 +41,19 @@ hi Search term=bold ctermfg=Black ctermbg=DarkYellow
 
 " Highlight cursor line.
 set cursorline
-hi CursorLine cterm=NONE ctermbg=DarkBlue
+hi CursorLine cterm=NONE ctermbg=DarkGrey
 
 " Highlight overlength lines.
 if exists('+colorcolumn')
 	set colorcolumn=80
 	hi ColorColumn ctermbg=DarkGrey
 else
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+	au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
 " Highlight trailing whitespace.
 highlight WhitespaceEOL ctermbg=DarkRed
 match WhitespaceEOL /\s\+$/
-
-" Go settings: use goimports and run gofmt on save.
-"let g:gofmt_command="goimports"
-"autocmd FileType go autocmd BufWritePre <buffer> Fmt
 
 " C and C++ indent.
 autocmd FileType c,cpp set cindent
@@ -77,13 +73,25 @@ map \t <Esc>:set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0<CR>
 " pathogen
 call pathogen#infect()
 
+" Go settings: use goimports and run gofmt on save.
+let g:go_fmt_command="goimports"
+
 " omni settings
 set wildmode=list:longest
 set completeopt=longest,menuone
 
 " auto open tagbar
-autocmd VimEnter * nested :call tagbar#autoopen(1)
+"autocmd VimEnter * nested :call tagbar#autoopen(1)
 map <F8> :TagbarToggle<CR>
 
-" Ignore Syntastic errors about proprietary html tags of angularjs.
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+" Ignore some Syntastic errors about html.
+let g:syntastic_html_tidy_ignore_errors = [
+	\"trimming empty <i>",
+	\"trimming empty <span>",
+	\"<a> attribute \"href\" lacks value",
+	\"<input> proprietary attribute \"autocomplete\"",
+	\"<input> proprietary attribute \"required\"",
+	\"proprietary attribute \"ng-",
+	\"proprietary attribute \"role\"",
+	\"proprietary attribute \"hidden\"",
+\]
