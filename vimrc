@@ -61,6 +61,12 @@ autocmd FileType c,cpp set cindent
 " Python indent.
 autocmd FileType python set expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
+" YAML indent.
+autocmd FileType yaml set expandtab tabstop=2 shiftwidth=2 softtabstop=2
+
+" Disable colorcolumn for html
+autocmd FileType html set colorcolumn=0
+
 " Markdown.
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
@@ -89,6 +95,7 @@ let g:syntastic_html_tidy_ignore_errors = [
 	\"trimming empty <i>",
 	\"trimming empty <span>",
 	\"<a> attribute \"href\" lacks value",
+	\"<input> proprietary attribute \"autofocus\"",
 	\"<input> proprietary attribute \"autocomplete\"",
 	\"<input> proprietary attribute \"required\"",
 	\"proprietary attribute \"ng-",
