@@ -16,7 +16,7 @@ export LESS="-i -R"
 export COPYFILE_DISABLE=true # Otherwise OSX tar will create ._ files
 
 # Dev
-export GOROOT=/opt/go
+export GOROOT=$HOME/go
 export GOPATH=$HOME
 export PYTHONSTARTUP=~/.pyrc
 
