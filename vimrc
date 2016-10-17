@@ -1,7 +1,7 @@
 " Misc
 set nocompatible
 set splitright
-colorscheme bvemu
+colorscheme monochrome
 filetype plugin indent on
 
 " Avoid clear screen at exit.
@@ -43,29 +43,23 @@ hi Search term=bold ctermfg=Black ctermbg=DarkYellow
 set cursorline
 hi CursorLine cterm=NONE ctermbg=DarkGrey
 
-" Highlight overlength lines.
-if exists('+colorcolumn')
-	set colorcolumn=80
-	hi ColorColumn ctermbg=DarkGrey
-else
-	au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-endif
-
-" Highlight trailing whitespace.
+" Highlight trailing whitespace and 80th column.
 highlight WhitespaceEOL ctermbg=DarkRed
 match WhitespaceEOL /\s\+$/
+hi ColorColumn ctermbg=DarkGrey
 
-" C and C++ indent.
-autocmd FileType c,cpp set cindent
+" C and C++ setup.
+autocmd FileType c,cpp set colorcolumn=80 cindent
 
-" Python indent.
-autocmd FileType python set expandtab tabstop=4 shiftwidth=4 softtabstop=4
+" Python setup.
+autocmd FileType python set colorcolumn=80 expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
-" YAML indent.
+" YAML setup.
 autocmd FileType yaml set expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
-" Disable colorcolumn for html
-autocmd FileType html set colorcolumn=0
+" Go setup.
+"autocmd BufNewFile,BufReadPost *.go set filetype=go
+autocmd FileType go set colorcolumn=80
 
 " Markdown.
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
@@ -94,11 +88,16 @@ map <F8> :TagbarToggle<CR>
 let g:syntastic_html_tidy_ignore_errors = [
 	\"trimming empty <i>",
 	\"trimming empty <span>",
-	\"<a> attribute \"href\" lacks value",
 	\"<input> proprietary attribute \"autofocus\"",
 	\"<input> proprietary attribute \"autocomplete\"",
 	\"<input> proprietary attribute \"required\"",
 	\"proprietary attribute \"ng-",
 	\"proprietary attribute \"role\"",
 	\"proprietary attribute \"hidden\"",
+	\"trimming empty <b>",
+	\"trimming empty <li>",
+	\"<a> attribute \"href\" lacks value",
+	\"<img> lacks \"alt\" attribute",
+	\"<img> lacks \"src\" attribute",
+	\"<form> lacks \"action\" attribute",
 \]
