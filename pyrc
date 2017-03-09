@@ -11,7 +11,6 @@ else:
         readline.read_history_file(histfile)
     except IOError:
         pass
-    readline.parse_and_bind('bind ^I rl_complete')
-    #readline.parse_and_bind('tab: complete')
+    readline.parse_and_bind('tab: complete')
     atexit.register(readline.write_history_file, histfile)
     del os, histfile, readline, atexit, rlcompleter

@@ -5,6 +5,7 @@ alias cp='cp -vi'
 alias mv='mv -vi'
 alias ssh='ssh -v'
 alias scpresume="rsync --partial --progress --rsh=ssh"
+alias tar=gtar
 alias vi=/usr/local/bin/vim
 alias vim=/usr/local/bin/vim
 
@@ -16,8 +17,7 @@ export LESS="-i -R"
 export COPYFILE_DISABLE=true # Otherwise OSX tar will create ._ files
 
 # Dev
-export GOROOT=$HOME/go
-export GOPATH=$HOME
+export GOPATH=$HOME/go
 export PYTHONSTARTUP=~/.pyrc
 
 # Freegeoip
