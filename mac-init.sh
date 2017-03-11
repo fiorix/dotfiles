@@ -3,10 +3,10 @@
 # Brew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-brew_cask="dropbox skype telegram-desktop shiftit vagrant virtualbox lastpass"
+brew_cask="dropbox skype telegram-desktop shiftit vagrant virtualbox lastpass vlc"
 brew install `echo $brew_cask | awk '{for(o=1;o<=NF;o++){print "Caskroom/cask/"$o}}'`
 
-brew_pkgs="go vim gtar graphviz bash-completion"
+brew_pkgs="go vim gtar graphviz bash-completion watch"
 brew install $brew_pkgs
 
 # Font
