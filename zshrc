@@ -3,14 +3,20 @@ set -o emacs
 autoload -U compinit && compinit
 zstyle ':completion:*' menu yes select
 
+autoload -U select-word-style
+select-word-style bash
+
 export EDITOR=vim
 export GOPATH=$HOME/go
 export GREP_OPTIONS="--color=auto"
-export HISTSIZE=5000
 export LESS="-i -R"
 export PATH=$PATH:$HOME/bin:$GOPATH/bin
-export SAVEHIST=1000000
 export VCS_PROMPT=git_prompt_info
+
+export HISTFILE=~/.zsh_history
+export HISTSIZE=5000
+export SAVEHIST=1000000
+setopt SHARE_HISTORY
 
 alias cp='cp -vi'
 alias ls='ls -F'
