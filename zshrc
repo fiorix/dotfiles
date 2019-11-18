@@ -31,7 +31,8 @@ if [ "$(uname -s)" = "Darwin" ]; then
     alias tar=gtar
 fi
 
-custom_rprompt=""
+base_prompt="%30<...<%~ %(!.#.$) "
+custom_prompt=""
 last_run_time=""
 last_vcs_info=""
 
@@ -47,22 +48,24 @@ function precmd() {
         local elapsed=$(hmnz duration $last_run_time)
         case $RETVAL in
             0) info=$elapsed;;
-            *) info=$(printf "%s \u2612 %d" "$elapsed" "$RETVAL");;
+            *) info=$(printf "%s [%d]" "$elapsed" "$RETVAL");;
         esac
         unset last_run_time
     fi
 
     if [ -z "$info" -a ! -z "$last_vcs_info" ]; then
-        custom_rprompt=$last_vcs_info
+        custom_prompt="$last_vcs_info $base_prompt"
         return;
     fi
 
     if (( ${+VCS_PROMPT} )); then
         last_vcs_info=$($VCS_PROMPT)
-        [ -z "$info" ] && info=$last_vcs_info || info="$info $last_vcs_info"
+        if [ ! -z "$last_vcs_info" ]; then
+            [ -z "$info" ] && info=$last_vcs_info || info="$info $last_vcs_info"
+        fi
     fi
 
-    custom_rprompt=$info
+    [ -z "$info" ] && custom_prompt="$base_prompt" || custom_prompt="$info $base_prompt"
 }
 
 function git_prompt_info() {
@@ -78,8 +81,27 @@ function git_prompt_info() {
     print ${branch}${dirty}
 }
 
+function hg_prompt_info() {
+    unset output info parts branch_parts branch
+
+    local output=""
+    if ! output="$(hg status 2> /dev/null)"; then
+        return
+    fi
+
+    local dirty=""
+    [ ! -z "$output" ] && dirty="*"
+
+    local info=$(hg log -l1 --template '{author}:{remotenames}:{phabdiff}')
+    local parts=(${(@s/:/)info})
+    local branch_parts=(${(@s,/,)parts[2]})
+    local branch=${branch_parts[-1]}
+    [ ! -z "${parts[3]}" ] && [[ "${parts[1]}" =~ "$USER@" ]] && branch=${parts[3]}
+
+    print ${branch}${dirty}
+}
+
 setopt PROMPT_SUBST
-PROMPT='%30<...<%~ %(!.#.$) '
-RPROMPT='$custom_rprompt'
+PROMPT='$custom_prompt'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
