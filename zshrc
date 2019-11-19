@@ -41,14 +41,16 @@ function preexec() {
 }
 
 function precmd() {
-    RETVAL=$?
+    RETVAL=$pipestatus
+    [ $((${(j[+])pipestatus})) -eq 0 ] && RETVAL=0
+
     local info=""
 
     if [ ! -z "$last_run_time" ]; then
         local elapsed=$(hmnz duration $last_run_time)
         case $RETVAL in
             0) info=$elapsed;;
-            *) info=$(printf "%s [%d]" "$elapsed" "$RETVAL");;
+            *) info=$(printf "%s [%s]" "$elapsed" "$RETVAL");;
         esac
         unset last_run_time
     fi
