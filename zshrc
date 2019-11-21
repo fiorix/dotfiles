@@ -6,6 +6,8 @@ zstyle ':completion:*' menu yes select
 autoload -U select-word-style
 select-word-style bash
 
+bindkey "\e[3~" delete-char
+
 export EDITOR=vim
 export GOPATH=$HOME/go
 export GREP_OPTIONS="--color=auto"
@@ -29,6 +31,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
     export COPYFILE_DISABLE=true
     alias date=gdate
     alias tar=gtar
+    alias timeout=gtimeout
 fi
 
 base_prompt="%30<...<%~ %(!.#.$) "
