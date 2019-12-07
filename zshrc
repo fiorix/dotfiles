@@ -2,6 +2,7 @@ set -o emacs
 
 autoload -U compinit && compinit
 zstyle ':completion:*' menu yes select
+zstyle ":completion:*:commands" rehash 1
 
 autoload -U select-word-style
 select-word-style bash
@@ -18,6 +19,13 @@ export VCS_PROMPT=git_prompt_info
 export HISTFILE=~/.zsh_history
 export HISTSIZE=5000
 export SAVEHIST=1000000
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
 setopt SHARE_HISTORY
 
 alias cp='cp -vi'
@@ -47,30 +55,31 @@ function precmd() {
     RETVAL=$pipestatus
     [ $((${(j[+])pipestatus})) -eq 0 ] && RETVAL=0
 
-    local info=""
+    local buf=""
 
     if [ ! -z "$last_run_time" ]; then
         local elapsed=$(hmnz duration $last_run_time)
         case $RETVAL in
-            0) info=$elapsed;;
-            *) info=$(printf "%s [%s]" "$elapsed" "$RETVAL");;
+            0) buf=$'\u2714'" $elapsed";;
+            *) buf=$'\u2718'$(printf " %s [%s]" "$elapsed" "$RETVAL");;
         esac
+        buf+=$'\n'
         unset last_run_time
     fi
 
-    if [ -z "$info" -a ! -z "$last_vcs_info" ]; then
+    if [ -z "$buf" -a ! -z "$last_vcs_info" ]; then
         custom_prompt="$last_vcs_info $base_prompt"
         return;
     fi
 
     if (( ${+VCS_PROMPT} )); then
         last_vcs_info=$($VCS_PROMPT)
-        if [ ! -z "$last_vcs_info" ]; then
-            [ -z "$info" ] && info=$last_vcs_info || info="$info $last_vcs_info"
+        if [ -z "$last_vcs_info" ]; then
+            custom_prompt="$buf$base_prompt"
+        else
+            custom_prompt="$buf$last_vcs_info $base_prompt"
         fi
     fi
-
-    [ -z "$info" ] && custom_prompt="$base_prompt" || custom_prompt="$info $base_prompt"
 }
 
 function git_prompt_info() {
