@@ -10,10 +10,10 @@ select-word-style bash
 bindkey "\e[3~" delete-char
 
 export EDITOR=vim
-export GOPATH=$HOME/go
+export GOPATH=$HOME/tmp/gopath:$HOME/go
 export GREP_OPTIONS="--color=auto"
 export LESS="-i -R"
-export PATH=$PATH:$HOME/bin:$GOPATH/bin
+export PATH=$PATH:/usr/local/sbin:$HOME/bin:$GOPATH/bin
 export VCS_PROMPT=git_prompt_info
 
 export HISTFILE=~/.zsh_history
@@ -91,7 +91,7 @@ function git_prompt_info() {
     local dirty=""
     [ ! -z "$output" ] && dirty="*"
 
-    local branch=$(git branch | grep \* | cut -d' ' -f2)
+    local branch=$(git branch | grep \* | cut -d' ' -f2-)
     print ${branch}${dirty}
 }
 
@@ -118,4 +118,31 @@ function hg_prompt_info() {
 setopt PROMPT_SUBST
 PROMPT='$custom_prompt'
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
+[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
+
+# Copied from https://stackoverflow.com/a/59440771/332770
+#
+# This can help generate pseudo-version for go.mod using
+# a local git checkout of certain repo when the repo's
+# go.mod is broken (e.g. etcd ).
+#
+# Once you have a local clone, checkout to the desired
+# commit and run git_go_version, then use the output
+# to configure your go.mod:
+#
+#   go mod edit -require $(git_go_version)
+#
+# This should no longer be needed once the world transition
+# to properly working go.mod in all repos. ;)
+function git_go_version() {
+    setopt local_options err_return
+    grep ^module go.mod | cut -d' ' -f2 | tr -d '\n'
+    echo -ne @v0.0.0-
+    TZ=UTC git \
+        --no-pager show \
+        --quiet \
+        --abbrev=12 \
+        --date='format-local:%Y%m%d%H%M%S' \
+        --format="%cd-%h"
+}
