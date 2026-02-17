@@ -1,7 +1,7 @@
 " Misc
 set nocompatible
 set splitright
-colorscheme monochrome
+"colorscheme monochrome
 filetype plugin indent on
 
 " Avoid clear screen at exit.
@@ -71,7 +71,7 @@ map \4 <Esc>:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 map \t <Esc>:set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0<CR>
 
 " pathogen
-call pathogen#infect()
+"call pathogen#infect()
 
 " Go settings: use goimports and run gofmt on save.
 let g:go_fmt_command="goimports"

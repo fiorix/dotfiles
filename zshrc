@@ -10,10 +10,9 @@ select-word-style bash
 bindkey "\e[3~" delete-char
 
 export EDITOR=vim
-export GOPATH=$HOME/tmp/gopath:$HOME/go
 export GREP_OPTIONS="--color=auto"
 export LESS="-i -R"
-export PATH=$PATH:/usr/local/sbin:$HOME/bin:$GOPATH/bin
+export PATH=$PATH:~/.local/bin
 export VCS_PROMPT=git_prompt_info
 
 export HISTFILE=~/.zsh_history
@@ -32,8 +31,6 @@ alias cp='cp -vi'
 alias ls='ls -F'
 alias mv='mv -vi'
 alias rm='rm -vi'
-alias scpresume="rsync --partial --progress --rsh=ssh"
-alias ssh='ssh -v'
 
 if [ "$(uname -s)" = "Darwin" ]; then
     export COPYFILE_DISABLE=true
@@ -42,7 +39,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
     alias timeout=gtimeout
 fi
 
-base_prompt="%30<...<%~ %(!.#.$) "
+base_prompt="%m %30<...<%~ %(!.#.$) "
 custom_prompt=""
 last_run_time=""
 last_vcs_info=""
@@ -121,28 +118,3 @@ PROMPT='$custom_prompt'
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
-# Copied from https://stackoverflow.com/a/59440771/332770
-#
-# This can help generate pseudo-version for go.mod using
-# a local git checkout of certain repo when the repo's
-# go.mod is broken (e.g. etcd ).
-#
-# Once you have a local clone, checkout to the desired
-# commit and run git_go_version, then use the output
-# to configure your go.mod:
-#
-#   go mod edit -require $(git_go_version)
-#
-# This should no longer be needed once the world transition
-# to properly working go.mod in all repos. ;)
-function git_go_version() {
-    setopt local_options err_return
-    grep ^module go.mod | cut -d' ' -f2 | tr -d '\n'
-    echo -ne @v0.0.0-
-    TZ=UTC git \
-        --no-pager show \
-        --quiet \
-        --abbrev=12 \
-        --date='format-local:%Y%m%d%H%M%S' \
-        --format="%cd-%h"
-}
