@@ -10,7 +10,6 @@ select-word-style bash
 bindkey "\e[3~" delete-char
 
 export EDITOR=vim
-export GREP_OPTIONS="--color=auto"
 export LESS="-i -R"
 export PATH=$PATH:~/.local/bin
 export VCS_PROMPT=git_prompt_info
@@ -19,15 +18,13 @@ export HISTFILE=~/.zsh_history
 export HISTSIZE=5000
 export SAVEHIST=1000000
 setopt EXTENDED_HISTORY
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_SAVE_NO_DUPS
 setopt SHARE_HISTORY
 
 alias cp='cp -vi'
+alias grep='grep --color=auto'
 alias ls='ls -F'
 alias mv='mv -vi'
 alias rm='rm -vi'
@@ -40,38 +37,85 @@ if [ "$(uname -s)" = "Darwin" ]; then
 fi
 
 base_prompt="%m %30<...<%~ %(!.#.$) "
-custom_prompt=""
-last_run_time=""
-last_vcs_info=""
+
+# _fmt_duration formats a nanosecond duration as a human-readable string,
+# matching the output of Go's time.Duration.String().
+_fmt_duration() {
+    local -i ns=$1
+    if (( ns == 0 )); then
+        echo "0s"
+        return
+    fi
+
+    local -i h=$(( ns / 3600000000000 ))
+    local -i rem=$(( ns % 3600000000000 ))
+    local -i m=$(( rem / 60000000000 ))
+    rem=$(( rem % 60000000000 ))
+    local -i s=$(( rem / 1000000000 ))
+    local -i ms=$(( (rem % 1000000000) / 1000000 ))
+
+    local frac=""
+    if (( ms > 0 )); then
+        frac=$(printf ".%03d" $ms)
+        frac="${frac%0}"
+        frac="${frac%0}"
+    fi
+
+    if (( h > 0 )); then
+        echo "${h}h${m}m${s}${frac}s"
+    elif (( m > 0 )); then
+        echo "${m}m${s}${frac}s"
+    elif (( s > 0 )); then
+        echo "${s}${frac}s"
+    else
+        echo "${ms}ms"
+    fi
+}
+
+# _parse_ts parses a "sec.nsec" timestamp to nanoseconds, truncated to ms.
+_parse_ts() {
+    local arg=$1
+    local sec="${arg%%.*}"
+    local nsec="${arg#*.}"
+    local -i ms=$(( 10#${nsec} / 1000000 ))
+    echo $(( sec * 1000000000 + ms * 1000000 ))
+}
+
+# _elapsed_since prints human-readable duration since a "sec.nsec" timestamp.
+_elapsed_since() {
+    local -i start=$(_parse_ts "$1")
+    local -i end=$(_parse_ts "$(date +%s.%N)")
+    _fmt_duration $(( end - start ))
+}
 
 function preexec() {
-  last_run_time=$(date +%s.%N)
+    last_run_time=$(date +%s.%N)
 }
 
 function precmd() {
-    RETVAL=$pipestatus
-    [ $((${(j[+])pipestatus})) -eq 0 ] && RETVAL=0
+    local retval=0
+    (( ${(j[+])pipestatus} )) && retval=${pipestatus[-1]}
 
     local buf=""
 
-    if [ ! -z "$last_run_time" ]; then
-        local elapsed=$(hmnz duration $last_run_time)
-        case $RETVAL in
+    if [[ -n $last_run_time ]]; then
+        local elapsed=$(_elapsed_since $last_run_time)
+        case $retval in
             0) buf=$'\u2714'" $elapsed";;
-            *) buf=$'\u2718'$(printf " %s [%s]" "$elapsed" "$RETVAL");;
+            *) buf=$'\u2718'$(printf " %s [%s]" "$elapsed" "$retval");;
         esac
         buf+=$'\n'
         unset last_run_time
     fi
 
-    if [ -z "$buf" -a ! -z "$last_vcs_info" ]; then
+    if [[ -z $buf && -n $last_vcs_info ]]; then
         custom_prompt="$last_vcs_info $base_prompt"
-        return;
+        return
     fi
 
     if (( ${+VCS_PROMPT} )); then
         last_vcs_info=$($VCS_PROMPT)
-        if [ -z "$last_vcs_info" ]; then
+        if [[ -z $last_vcs_info ]]; then
             custom_prompt="$buf$base_prompt"
         else
             custom_prompt="$buf$last_vcs_info $base_prompt"
@@ -86,9 +130,9 @@ function git_prompt_info() {
     fi
 
     local dirty=""
-    [ ! -z "$output" ] && dirty="*"
+    [[ -n $output ]] && dirty="*"
 
-    local branch=$(git branch | grep \* | cut -d' ' -f2-)
+    local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
     print ${branch}${dirty}
 }
 

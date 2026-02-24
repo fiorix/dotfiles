@@ -33,7 +33,7 @@ set history=50
 set viminfo='20,\"50
 
 " Colors, syntax and search highlight.
-syntax on
+syntax off
 set hlsearch
 set t_Co=256
 hi Comment term=bold ctermfg=White
@@ -70,34 +70,6 @@ map \2 <Esc>:set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 map \4 <Esc>:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 map \t <Esc>:set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0<CR>
 
-" pathogen
-"call pathogen#infect()
-
-" Go settings: use goimports and run gofmt on save.
-let g:go_fmt_command="goimports"
-
 " omni settings
 set wildmode=list:longest
 set completeopt=longest,menuone
-
-" auto open tagbar
-"autocmd VimEnter * nested :call tagbar#autoopen(1)
-map <F8> :TagbarToggle<CR>
-
-" Ignore some Syntastic errors about html.
-let g:syntastic_html_tidy_ignore_errors = [
-	\"trimming empty <i>",
-	\"trimming empty <span>",
-	\"<input> proprietary attribute \"autofocus\"",
-	\"<input> proprietary attribute \"autocomplete\"",
-	\"<input> proprietary attribute \"required\"",
-	\"proprietary attribute \"ng-",
-	\"proprietary attribute \"role\"",
-	\"proprietary attribute \"hidden\"",
-	\"trimming empty <b>",
-	\"trimming empty <li>",
-	\"<a> attribute \"href\" lacks value",
-	\"<img> lacks \"alt\" attribute",
-	\"<img> lacks \"src\" attribute",
-	\"<form> lacks \"action\" attribute",
-\]
