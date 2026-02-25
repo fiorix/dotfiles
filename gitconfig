@@ -1,0 +1,7 @@
+[user]
+	name = Alexandre Fiori
+	email = fiorix@gmail.com
+[alias]
+	st = status
+[init]
+	defaultBranch = main
