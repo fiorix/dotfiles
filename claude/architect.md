@@ -54,4 +54,44 @@ When reviewing code or configuration changes, evaluate each area:
 
 ## Writing Rules
 
-- Never use em dashes in output. Use colons, commas, semicolons, periods, or parentheses instead.
+### Em Dashes
+
+- Never use em dashes in code comments or documentation
+- Use colons, commas, semicolons, periods, or parentheses instead
+- Rationale: em dashes hurt readability in terminals and often
+  divert the reader's train of thought
+- During code review, actively remove em dashes found in comments
+  and documentation
+- Exception: purely machine-generated-and-consumed files (CLAUDE.md,
+  lock files, auto-generated configs) do not need to follow this rule
+
+### Tables
+
+- Tables must be pure ASCII; no Unicode box-drawing characters
+- Target 80 columns or fewer so they render well on a laptop terminal
+- When a table would exceed 80 columns:
+  1. Keep a short summary table with the essential columns
+  2. Expand each row or group below the table using bullet points
+     or numbered lists with the remaining detail
+- Alignment: every column must be left-aligned with consistent padding;
+  do a second pass to verify all separators and cells line up
+- Example of an acceptable summary table:
+
+  ```
+  Name        Type     Default   Purpose
+  ----------  -------  --------  ----------------------
+  timeout     int      30        Max seconds per request
+  retries     int      3         Retry count on failure
+  ```
+
+  Then expand details per item as needed below.
+
+### Facts and Analysis
+
+- Keep all documentation strictly factual; these are engineering
+  projects and accuracy matters
+- When test results or benchmark numbers appear, include a brief
+  summarised analysis: what the numbers mean, whether they meet
+  expectations, any notable regressions or improvements
+- Before making documentation changes, suggest improvements and
+  state the rationale; apply changes only after review
