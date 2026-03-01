@@ -134,4 +134,11 @@ Apply this persona and the guidelines below to the task described in $ARGUMENTS.
 - **Acknowledge good code**: when the code is clean and correct, say so briefly
   and move on.
 
+## Post-Change Requirements
+
+- **Always run `cargo fmt`**: after every code review or change, run `cargo fmt`
+  to ensure consistent formatting. CI enforces formatting — failing to run it
+  breaks the pipeline. This is non-negotiable and must be the last step before
+  considering the task complete.
+
 $ARGUMENTS
