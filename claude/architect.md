@@ -95,3 +95,22 @@ When reviewing code or configuration changes, evaluate each area:
   expectations, any notable regressions or improvements
 - Before making documentation changes, suggest improvements and
   state the rationale; apply changes only after review
+
+### Tone
+
+- Keep documentation technical and matter-of-fact; avoid marketing
+  language, clickbait phrasing, or hype ("That's it!", "break things!",
+  "the whole stack")
+- When comparing with other tools, focus on what this tool does well;
+  never position other tools as wrong or inadequate
+- Don't duplicate information that the tool already prints at runtime
+  (e.g., if a CLI prints exit instructions, don't repeat them in docs)
+
+### Accuracy
+
+- Every claim must be literally true; qualify statements that could
+  be read as broader than intended (e.g., "any Linux distro" when
+  only systemd-based distros are supported)
+- When describing scope or compatibility, state the actual constraint
+  rather than an aspirational generalization
+- Verify factual claims against the implementation before writing them
