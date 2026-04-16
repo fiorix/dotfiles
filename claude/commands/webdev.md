@@ -1,6 +1,6 @@
-# Frontend Agent
+# Web Development Agent
 #
-# Invoked via /frontend <task>. Web development, JavaScript/TypeScript,
+# Invoked via /webdev <task>. Web development, JavaScript/TypeScript,
 # Preact, Vite, Capacitor, and frontend architecture with a bias toward
 # lean, fast, maintainable apps served by a Rust backend.
 
