@@ -91,7 +91,7 @@ _elapsed_since() {
 
 # Preexec via DEBUG trap: capture timestamp of first command per prompt cycle.
 _preexec_ran=1
-trap '[ "$_preexec_ran" = "0" ] && _preexec_ran=1 && last_run_time=$(date +%s.%N)' DEBUG
+trap '[[ "$BASH_COMMAND" != "$PROMPT_COMMAND" ]] && [ "$_preexec_ran" = "0" ] && _preexec_ran=1 && last_run_time=$(date +%s.%N)' DEBUG
 
 _precmd() {
     local retval=$?
