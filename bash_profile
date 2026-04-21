@@ -91,7 +91,7 @@ _elapsed_since() {
 
 # Preexec via DEBUG trap: capture timestamp of first command per prompt cycle.
 _preexec_ran=1
-trap '[[ "$BASH_COMMAND" != "$PROMPT_COMMAND" ]] && [ "$_preexec_ran" = "0" ] && _preexec_ran=1 && last_run_time=$(date +%s.%N)' DEBUG
+trap '[ "$_preexec_ran" = "0" ] && _preexec_ran=1 && last_run_time=$(date +%s.%N)' DEBUG
 
 _precmd() {
     local retval=$?
@@ -105,9 +105,13 @@ _precmd() {
         retval=${_pipes[${#_pipes[@]}-1]}
     fi
 
+    # Detect if a real command was run by checking history number.
+    local cur_hist
+    cur_hist=$(HISTTIMEFORMAT='' builtin history 1 | awk '{print $1}')
+
     local buf=""
 
-    if [ -n "${last_run_time:-}" ]; then
+    if [ -n "${last_run_time:-}" ] && [ "${cur_hist:-}" != "${_last_hist:-}" ]; then
         local elapsed=$(_elapsed_since "$last_run_time")
         if [ "$retval" -eq 0 ]; then
             buf=$(printf '\xe2\x9c\x94 %s' "$elapsed")
@@ -115,8 +119,9 @@ _precmd() {
             buf=$(printf '\xe2\x9c\x98 %s [%s]' "$elapsed" "$retval")
         fi
         buf="$buf"$'\n'
-        unset last_run_time
     fi
+    unset last_run_time
+    _last_hist=$cur_hist
 
     local vcs_info=""
     if [ -n "${VCS_PROMPT:-}" ]; then
