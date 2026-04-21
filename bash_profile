@@ -10,6 +10,10 @@ fi
 
 bind '"\e[3~": delete-char'
 
+if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 export EDITOR=vim
 export LESS="-i -R"
 export PATH=$PATH:~/.local/bin
