@@ -28,6 +28,7 @@ alias mv='mv -vi'
 alias rm='rm -vi'
 
 if [ "$(uname -s)" = "Darwin" ]; then
+    export BASH_SILENCE_DEPRECATION_WARNING=1
     export COPYFILE_DISABLE=true
     alias date=gdate
     alias tar=gtar
