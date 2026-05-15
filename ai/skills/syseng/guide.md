@@ -28,11 +28,13 @@ Load only the reference needed for the current task:
 - `references/filesystems.md`: ext4, xfs, btrfs, tmpfs, overlayfs, squashfs,
   NFS, xattrs, atomic file operations.
 - `references/systemd.md`: units, dependencies, resource control, sandboxing,
-  lifecycle, journald, resolved, networkd, tmpfiles, debugging tools.
+  lifecycle, journald, resolved, networkd, tmpfiles, debugging tools, PID1
+  review invariants.
 - `references/dbus.md`: D-Bus architecture, type system, common system bus
-  services, activation, policy, programming APIs.
+  services, activation, policy, programming APIs, sd-bus review checks.
 - `references/varlink.md`: Varlink protocol, IDL, systemd interfaces, tools,
   D-Bus comparison, socket activation.
 - `references/coding-ops.md`: language rules, verbose instrumentation, and
   operational/documentation rules.
-
+- `references/systemd-review.md`: systemd patch review protocol, cleanup,
+  namespace, debugging, and false-positive elimination.

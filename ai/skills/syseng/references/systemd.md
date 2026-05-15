@@ -1,5 +1,9 @@
 # systemd
 
+For code review of systemd itself or systemd-style C, also load
+`systemd-review.md`. It contains the review baseline derived from
+`masoncl/review-prompts/systemd`.
+
 ## Unit Types
 
 - `service`: daemons and oneshot tasks. Key types: `simple`, `exec`,
@@ -96,3 +100,13 @@
 - `busctl tree`, `busctl introspect`, `busctl call`, `busctl monitor`.
 - `loginctl list-sessions`, `loginctl show-session`, `loginctl enable-linger`.
 
+## PID1 Review Hotspots
+
+- No threads in PID1.
+- No NSS lookups from PID1.
+- No synchronous IPC from PID1 to services it manages.
+- Unit, job, D-Bus object, event source, and async callback lifetimes must be
+  explicit.
+- New unit settings need parser, D-Bus, systemctl/bus utility, docs, tests, and
+  fuzz coverage where applicable.
+- daemon-reload must fail without corrupting active state.

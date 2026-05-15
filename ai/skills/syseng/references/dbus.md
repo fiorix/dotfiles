@@ -1,5 +1,9 @@
 # D-Bus
 
+For systemd sd-bus code review, also load `systemd-review.md`. It adds
+message, slot, object, callback, and PID1-specific D-Bus checks derived from
+`masoncl/review-prompts/systemd/dbus.md`.
+
 ## Architecture
 
 - Message-based IPC with method calls, replies, errors, signals, and
@@ -77,3 +81,22 @@
 - Python: `dasbus`, `pydbus`, `jeepney`; avoid older `dbus-python` unless the
   project already depends on it.
 
+## sd-bus Review Hotspots
+
+- Check every `sd_bus_message_read()` result and ensure the format string
+  matches the message signature.
+- Data returned from message reads points into the message. Copy it if it must
+  outlive the message.
+- Enter and exit containers symmetrically; handle `r > 0`, `r == 0`, and
+  `r < 0` correctly during iteration.
+- Track `sd_bus_slot` ownership. Unref slots before freeing callback userdata.
+- Async method callbacks must handle success, D-Bus errors, local errors, and
+  timeout/cancellation.
+- D-Bus method error paths should set a useful `sd_bus_error`.
+- Object vtables must be terminated and unregistered before freeing backing
+  objects.
+- Emit PropertiesChanged only after object registration and only for properties
+  that changed.
+- PID1 must not use blocking D-Bus calls to services it manages.
+- Privileged methods must check sender credentials and consult policy where
+  required.
