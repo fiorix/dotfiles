@@ -33,6 +33,35 @@
 - Prefer `std` over crates when equivalent.
 - Use `clap` or project-local parsing for `-v`/`--verbose`.
 
+## Process Execution Boundaries
+
+- Treat paths that lead to `exec*`, `Command`, daemon activation, helper CLIs,
+  interpreters, hooks, plugins, or privileged file opens as hostile until
+  proven otherwise.
+- Resolve the candidate once to an absolute canonical path, validate that exact
+  resolved object, and execute/open that same resolved path. Do not validate one
+  spelling and execute another.
+- Validate executable targets as regular files with execute permission. Reject
+  directories, FIFOs, sockets, device nodes, missing files, and ambiguous
+  symlink chains.
+- Avoid recursive discovery under user-controlled or broad roots. Do not walk
+  FUSE, network, automount, pseudo, or other surprising filesystems unless the
+  task explicitly requires it and has loop, depth, mount, and timeout limits.
+- For PATH lookup, build a bounded search list. Prefer user-supplied paths first
+  when they are part of the contract, then conventional system directories.
+  Validate the found executable before use.
+- Preserve child process PATH semantics for wrapper tools. If a validated CLI
+  may depend on `/usr/bin/env`, language runtimes, shell helpers, or package
+  manager shims, pass a PATH containing the validated search list rather than
+  only the executable's directory.
+- Check containing directories where trust matters. Reject group- or
+  world-writable executable files and unsafe writable ancestors unless sticky
+  directory semantics or the local threat model explicitly justify them.
+- Document residual race assumptions. Canonicalize plus metadata checks remove
+  common PATH, symlink, and replacement tricks, but they are not a complete
+  defense against same-user races without descriptor-based execution or stronger
+  platform support.
+
 ## Shell
 
 - Start scripts with `set -euo pipefail` for bash.
@@ -66,4 +95,3 @@
 - Update docs when new dependencies, operational constraints, or workarounds
   affect other users.
 - Comments explain why.
-

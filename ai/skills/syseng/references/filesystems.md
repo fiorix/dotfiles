@@ -92,6 +92,19 @@ mount -t overlay overlay \
 - For directory-entry durability, `fsync` the parent directory after rename
   when correctness across power loss matters.
 
+## Path Traversal And Trust
+
+- Avoid broad recursive walks over untrusted roots. They can hang on FUSE,
+  automounts, network filesystems, device trees, cyclic bind mounts, or hostile
+  symlink layouts.
+- Constrain traversal with explicit roots, depth limits, mount-boundary policy,
+  symlink policy, file type filters, and timeouts or cancellation.
+- Prefer direct path validation over search when the caller already supplied a
+  concrete path. If search is required, search only known directories and stop
+  at the first validated candidate.
+- For paths later used at a security boundary, validate the resolved object and
+  keep using that resolved path or file descriptor.
+
 ## Related Concepts
 
 - Mount namespaces: per-process mount tables. Use `unshare -m`, `nsenter`.
@@ -100,4 +113,3 @@ mount -t overlay overlay \
 - dm-crypt/LUKS: block encryption under the filesystem.
 - fscrypt: file-level encryption for supported filesystems.
 - Quotas: ext4/xfs user, group, project quotas; btrfs qgroups.
-
