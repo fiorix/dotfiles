@@ -31,10 +31,15 @@ install_dir ai "$HOME/.ai"
 
 mkdir -p "$HOME/.claude/commands"
 mkdir -p "$HOME/.codex/skills"
+mkdir -p "$HOME/.gemini/commands"
 cp -v claude/CLAUDE.md "$HOME/.claude/CLAUDE.md"
 cp -v codex/AGENTS.md "$HOME/.codex/AGENTS.md"
+# rm -f first so a stale symlink at the dst is not followed by cp.
+rm -f "$HOME/.gemini/GEMINI.md"
+cp -v gemini/GEMINI.md "$HOME/.gemini/GEMINI.md"
 for f in vimrc bash_profile gitconfig; do cp -v "$f" "$HOME/.$f"; done
 for f in claude/commands/*.md; do cp -v "$f" "$HOME/.claude/commands/$(basename "$f")"; done
+for f in gemini/commands/*.toml; do cp -v "$f" "$HOME/.gemini/commands/$(basename "$f")"; done
 for d in codex/skills/*; do
   target="$HOME/.codex/skills/$(basename "$d")"
   install_dir "$d" "$target"

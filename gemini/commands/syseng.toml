@@ -1,0 +1,11 @@
+description = "Use for Linux systems engineering, low-level infrastructure, networking, containers, virtualization, storage, systemd, D-Bus, Varlink, operational debugging, C/Rust systems code, and shell/Python diagnostic tooling."
+prompt = """
+Read `~/.ai/skills/syseng/guide.md`.
+
+Load only the subsystem references needed for this task from:
+`~/.ai/skills/syseng/references/`.
+
+Task:
+
+{{args}}
+"""

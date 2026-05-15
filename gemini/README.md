@@ -6,9 +6,13 @@ structure of `claude/` and `codex/`.
 ## Structure
 
 - `README.md`: This file.
-- `GEMINI.md`: Root-level adapter (located in the repository root) for instructions.
+- `GEMINI.md`: Global Gemini adapter installed to `~/.gemini/GEMINI.md`.
+- `commands/*.toml`: Gemini custom command adapters installed to
+  `~/.gemini/commands/`.
+- `../GEMINI.md`: Root-level project adapter for this dotfiles checkout.
 
 ## Shared Skills
 
-Gemini CLI should load domain-specific context from `../ai/skills/` when relevant.
-Refer to the root `GEMINI.md` for details on how to activate these contexts.
+Gemini CLI loads global context from `~/.gemini/GEMINI.md` and project context
+from repository `GEMINI.md` files. The custom commands mirror Claude's slash
+commands and point at the same shared guides in `~/.ai/skills/`.
