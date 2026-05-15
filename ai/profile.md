@@ -42,6 +42,12 @@ networking, backend services. Use the right language for the job.
 ## Git
 
 - Infer commit style from existing history.
+- Commit messages should follow local repo style. Prefer an imperative subject
+  plus a body when the change is non-trivial.
+- For broad commits, include: highlights, overall behavior changes,
+  verification performed, and known gaps / follow-up work.
+- Avoid vague summaries like "hardening" without explaining the concrete risks
+  addressed.
 - Ask before committing unless explicitly requested.
 - Never revert user changes unless explicitly requested.
 - Do not add assistant signatures, attribution footers, or co-author trailers to
