@@ -37,6 +37,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
     alias date=gdate
     alias tar=gtar
     alias timeout=gtimeout
+    alias sdme='limactl shell default sudo sdme'
 fi
 
 # _fmt_duration formats a nanosecond duration as a human-readable string,
