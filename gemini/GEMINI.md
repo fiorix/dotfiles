@@ -16,6 +16,7 @@ When performing specialized tasks, use the shared guides in `~/.ai/skills/`:
 - Rust: `~/.ai/skills/rustacean/guide.md`
 - Web development: `~/.ai/skills/webdev/guide.md`
 - Grilling a plan or design: `~/.ai/skills/grill-me/guide.md`
+- Grilling a plan against the docs: `~/.ai/skills/grill-with-docs/guide.md`
 
 For systems engineering work, load only the relevant subsystem reference files
 from `~/.ai/skills/syseng/references/`.
