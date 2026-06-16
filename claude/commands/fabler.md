@@ -1,0 +1,11 @@
+---
+description: Apply a distilled operating discipline to careful, verification-heavy work: read before you write, check the live system before asserting, treat every claim as guilty until proven, make verification adversarial, keep the plan as the spine, hold the scope line, match the house style, and report honestly. Use when starting a high-stakes build, audit, or refactor, or when the user says 'fabler' or asks to apply the operating discipline.
+---
+
+# Shared Claude Command Adapter: fabler
+
+Read `~/.ai/skills/fabler/guide.md` and apply it to this task.
+
+Task:
+
+$ARGUMENTS
