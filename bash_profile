@@ -1,5 +1,7 @@
 set -o emacs
 
+[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
+
 if [ -f /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
     . /opt/homebrew/etc/profile.d/bash_completion.sh
 elif [ -f /usr/share/bash-completion/bash_completion ]; then
