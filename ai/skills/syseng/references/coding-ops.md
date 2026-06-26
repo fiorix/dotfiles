@@ -94,4 +94,7 @@
   constraints when non-obvious.
 - Update docs when new dependencies, operational constraints, or workarounds
   affect other users.
-- Comments explain why.
+- Comments are a snapshot of the current code; explain why, not what. Comment
+  sparingly for code with side effects; document public APIs more thoroughly.
+- No archeology: keep task, phase, round, track, and lane references out of
+  comments and docs. History belongs in journals and the changelog.

@@ -55,8 +55,17 @@ networking, backend services. Use the right language for the job.
 
 ## Writing
 
+- Match the project's house style first; apply these principles only where the
+  house is silent.
 - ASCII by default.
 - No em dashes.
 - Technical and factual.
+- Hard-wrap `.txt` files at 80 columns. Do not hard-wrap `.md` or other text
+  files; let the renderer wrap.
 - Verify claims against implementation before documenting them.
-- Comments explain why, not what.
+- Comments are a snapshot of the current code, not its history. Explain why,
+  not what. Comment sparingly for code with side effects; document public APIs
+  exposed to users more thoroughly.
+- No archeology. Keep task, phase, round, track, and lane references out of code
+  comments and documentation; history belongs in journals and the project
+  changelog.
